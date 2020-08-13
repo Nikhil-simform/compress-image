@@ -36,6 +36,7 @@ def resize_image(image_path, thumbnail_upload_path, compress_upload_path)
     thumbnail_image.write(thumbnail_upload_path)
     
     compress_image.strip
-    compress_image.resize "30%"
+    compress_image.quality "85%"
+    compress_image.resize "25%"
     compress_image.write(compress_upload_path)
 end
