@@ -32,11 +32,17 @@ def resize_image(image_path, thumbnail_upload_path, compress_upload_path)
     thumbnail_image = MiniMagick::Image.open(image_path)
     compress_image = MiniMagick::Image.open(image_path)
     
-    thumbnail_image.resize "100x100"
+    thumbnail_image.resize "x100"
     thumbnail_image.write(thumbnail_upload_path)
     
     compress_image.strip
-    compress_image.quality "85%"
-    compress_image.resize "25%"
+    compress_image.quality "40%"
+    compress_image.sampling_factor "4:2:0"
+    compress_image.interlace "Plane"
+    compress_image.gaussian_blur "0.05"
+    
+    if compress_image.size > 2000000
+        compress_image.resize "25%"
+    end
     compress_image.write(compress_upload_path)
 end
