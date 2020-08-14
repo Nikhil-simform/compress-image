@@ -11,7 +11,6 @@ def lambda_handler(event:, context:)
 
     s3 = Aws::S3::Resource.new()
 
-    # Storing image temporary
     object = s3.bucket(bucket_name).object(object_name)
     download_path = "/tmp/#{object_name}"
     object.get(response_target: download_path)
@@ -21,7 +20,6 @@ def lambda_handler(event:, context:)
     
     resize_image(download_path, thumbnail_upload_path, compress_upload_path)
     
-    #uploading images to buckets
     s3.bucket("image-resize-test123-thumbnail").object(object_name).upload_file(thumbnail_upload_path)
     s3.bucket("image-resize-test123-compressed").object(object_name).upload_file(compress_upload_path)
     
